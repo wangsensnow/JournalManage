@@ -1,0 +1,24 @@
+<#include "./include/header.html"/>
+<body>
+    <button id="btn" data-bind="click:exportExcel" class="btn btn-success">导出excel</button>
+    <div class="k-query-detail" id="query-form2">
+        <select data-role="combobox" data-value-primitive="true" placeholder='语言' style="width:150px;margin-right:5px" data-text-field="description" data-value-field="langCode" data-bind="source: resourceTypeData,value:model.lang"></select>
+        <input type="text" placeholder='描述'  class="k-textbox">
+    </div>
+    <script>kendo.bind($('#query-form2'), viewModel);</script>
+<script>
+    var viewModel = kendo.observable({
+        exportExcel:function(){
+            var myForm = $("<form>").attr({
+                action:_basePath+"api/public/exportExcel",
+                method:"post"
+            });
+            myForm.submit();
+
+
+        }
+    });
+    kendo.bind($("#btn"),viewModel);
+</script>
+</body>
+</html>
