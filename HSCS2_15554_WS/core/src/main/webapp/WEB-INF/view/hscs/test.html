@@ -1,0 +1,143 @@
+<#include "../include/header.html"/>
+<body>
+<script src="${base.contextPath}/common/code?resourceTypeData=HSCS.ITF.DATATYPE"
+        type="text/javascript"></script>
+<label class="col-md-offset-1 col-md-1 control-label" for="dataType">
+    <@spring.message "hscs.interfacedefinition.datatype"/></label>
+<div class="col-md-1" style="padding: 0px;">
+    <input required id="dataType" type="text" data-bind="value:model.dataType">
+</div>
+<div id="test"></div>
+<div id='grid-container' style="clear: both;margin-top: 20px">
+    <div id="grid"></div>
+</div>
+<script>
+    var Model = kendo.data.Model.define({
+        id: "companyId",
+        fields: {
+            // companyType: { editable: false},
+            companyCode: {type: "int"},
+            companyShortName: {}
+        }
+    });
+    var model = new Model();
+
+    var viewModel = Hap.createGridViewModel("#grid");
+    var dataSource = new kendo.data.DataSource(
+        {
+            transport: {
+                read: {
+                    url: '/fnd/company/query',
+                    type: "POST",
+                    dataType: "json"
+                },
+                create: {
+                    url: "/fnd/company/submit",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                update: {
+                    url: "/fnd/company/submit",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                destroy: {
+                    url: "/fnd/company/remove",
+                    contentType: "application/json",
+                    type: "POST"
+                },
+                parameterMap: function (options, type) {
+                    if (type !== "read" && options.models) {
+                        var datas = Hap.prepareSubmitParameter(options, type);
+                        return kendo.stringify(datas);
+                    }
+                }
+            },
+            batch: true,
+            serverPaging: true,
+            pageSize: 10,
+            schema: {
+                data: 'rows',
+                total: 'total',
+                model: Model
+            }
+        });
+
+
+    $("#grid").kendoGrid({
+        dataSource: dataSource,
+        navigatable: false,
+        dataBound: function () {
+            if (parent.autoResizeIframe) {
+                parent.autoResizeIframe('FLEX_FIELD_DEMO')
+            }
+        },
+        resizable: true,
+        scrollable: true,
+        selectable: 'multiple,rowbox',
+        pageable: {
+            pageSizes: [5, 10, 20, 50],
+            refresh: true,
+            buttonCount: 5
+        },
+        columns: [
+            {
+                field: "companyShortName",
+                title: '公司简称',
+                width: 120,
+                editor: function (container, options) {
+                    $('<input name="' + options.field + '"/>')
+                        .appendTo(container)
+                        .kendoTLEdit({
+                            idField: 'companyId',
+                            field: 'companyShortName',
+                            dto: "com.hand.hap.fnd.dto.Company",
+                            model: options.model
+                        });
+                }
+            },
+            {
+                field: "startDateActive",
+                title: '开始有效日期',
+                width: 160,
+                headerAttributes: {
+                    "class": "table-header-cell",
+                    style: "text-align: center"
+                },
+                format: "{0:yyyy-MM-dd}",
+                attributes: {
+                    style: "text-align:center"
+                },
+                editor: function (container, options) {
+                    //获得到期时间
+                    var end = options.model.endDateActive;
+                    var opts = {
+                        format: "yyyy-MM-dd"
+                    }
+                    $('<input name="' + options.field + '"/>')
+                        .appendTo(container)
+                        .kendoDatePicker(opts);
+                }
+            }
+        ],
+        editable: true
+
+    });
+    var grid = $("#grid").data("kendoGrid");
+    var options = grid.getOptions().columns;
+    kendo.bind($("#dataType"),viewModel);
+    var dataType = $("#dataType").kendoComboBox({
+        valuePrimitive:true,
+        dataTextField: "meaning",
+        dataValueField: "meaning",
+        dataSource: resourceTypeData,
+        change:function (e) {
+            console.log("viewModel",options);
+            Hap.createFlexField("DATACLASS RULE",viewModel.model,"test");
+            Hap.createGridFlexField("DATACLASS RULE LINE",viewModel.model,"grid",options);
+        }
+    });
+
+</script>
+</body>
+</html>

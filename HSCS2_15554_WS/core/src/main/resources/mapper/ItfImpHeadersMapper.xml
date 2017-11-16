@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hap.exam.hscs_itf_imp_headers.mapper.ItfImpHeadersMapper">
+    <resultMap id="BaseResultMap" type="hap.exam.hscs_itf_imp_headers.dto.ItfImpHeaders">
+        <result column="HEADER_ID" property="headerId" jdbcType="DECIMAL" />
+        <result column="SOURCE_SYSTEM_CODE" property="sourceSystemCode" jdbcType="VARCHAR" />
+        <result column="BATCH_NUM" property="batchNum" jdbcType="VARCHAR" />
+        <result column="INTERFACE_NAME" property="interfaceName" jdbcType="VARCHAR" />
+        <result column="MODULE_CODE" property="moduleCode" jdbcType="VARCHAR" />
+        <result column="ITF_LINE_COUNT" property="itfLineCount" jdbcType="DECIMAL" />
+        <result column="ITF_HEADER_ID" property="itfHeaderId" jdbcType="DECIMAL" />
+        <result column="LINE_COUNT" property="lineCount" jdbcType="DECIMAL" />
+        <result column="DISABLE_FLAG" property="disableFlag" jdbcType="VARCHAR" />
+        <result column="PROCESS_STATUS" property="processStatus" jdbcType="VARCHAR" />
+        <result column="IMPORT_STATUS" property="importStatus" jdbcType="VARCHAR" />
+        <result column="IMPORT_DATE" property="importDate" jdbcType="DATE" />
+        <result column="IMPORT_MESSAGE" property="importMessage" jdbcType="VARCHAR" />
+        <result column="PROGRAM_ID" property="programId" jdbcType="DECIMAL" />
+        <result column="REQUEST_ID" property="requestId" jdbcType="DECIMAL" />
+    </resultMap>
+
+
+</mapper>

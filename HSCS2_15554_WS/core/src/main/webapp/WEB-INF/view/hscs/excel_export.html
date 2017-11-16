@@ -1,0 +1,242 @@
+<#include "../include/header.html"/>
+
+    <body>
+    <!--快速编码的集合----------------------------------------->
+    <script src="${base.contextPath}/common/code?sysResource=HSCS.GB.SOURCE_SYS"></script>
+    <script src="${base.contextPath}/common/code?textFormatSet=HSCS.GB.TEXTFORMAT"></script>
+
+    <!------------------------------------------------------->
+    <script>
+        var headerId;
+        var fromSystemValue;
+        var itfName;
+        var textFormat;
+        var row1 = {};
+        row1.name = 'david';
+        row1.age = '20';
+        var row2 = {name: 'peter', age: '23'};
+        var data = [];
+        data.push(row1);
+        data.push(row2);
+
+    </script>
+    <form action="api/public/hscs/itf/imp/headers/test" method="post">
+        <input type="submit" value="提交">
+    </form>
+
+    </form>
+    <div style="padding: 5px">
+        <h4 style="border-bottom: groove 1px;padding-bottom: 10px">下载excel模板</h4>
+        <div id="mycontainer">
+            <div class="row">
+                <label class="col-md-1" for="fromSystem" style="text-align: right">来源系统</label>
+                <div class="col-md-3">
+                    <input name="fromSystem" id="fromSystem" required validationMessage="必输">
+                    <div style="position:absolute;z-index: 2;left:65%;top:-4px;">
+                        <span data-for="fromSystem" class="k-invalid-msg"></span>
+                    </div>
+                    <script>
+                        //设置来源系统的样式
+                        $("#fromSystem").kendoComboBox({
+                            dataTextField: "value",
+                            dataValueField: "value",
+                            dataSource: sysResource,
+                            change: function () {
+                                fromSystemValue = this.value();
+                                $.each(sysResource, function (index, item) {
+                                    if ($("#fromSystem").data("kendoComboBox").value() == item.value) {
+                                        $("#sysDescription").val(item.meaning);
+                                    }
+                                })
+                            }
+                        });
+                    </script>
+                </div>
+                <label class="col-md-1" style="text-align: right" for="sysDescription">系统说明</label>
+                <div class="col-md-3">
+                    <input id="sysDescription" readonly style="background-color: #dddddd">
+                </div>
+                <label class="col-md-1" style="text-align: right" for="textFormat">文本格式</label>
+                <div class="col-md-3">
+                    <input name="textFormat" id="textFormat" required validationMessage="必输">
+                    <div style="position:absolute;z-index: 2;left:65%;top:-4px;">
+                        <span data-for="textFormat" class="k-invalid-msg"></span>
+                    </div>
+                    <script>
+                        //设置文本格式的样式
+                        $("#textFormat").kendoComboBox({
+                            dataTextField: "meaning",
+                            dataValueField: "meaning",
+                            dataSource: textFormatSet,
+                            change:function () {
+                                textFormat = this.value();
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 5px;">
+                <label class="col-md-1" style="text-align: right" for="itfName">接口名称</label>
+                <div class="col-md-3">
+                    <input name="itfName" id="itfName" type="text" required validationMessage="必输">
+                    <div style="position:absolute;z-index: 2;left:65%;top:-4px;">
+                        <span data-for="itfName" class="k-invalid-msg"></span>
+                    </div>
+                    <script>
+                        //设置接口名称为lov样式HSCS_ITF_NAME
+                        $("#itfName").kendoLov($.extend(${lovProvider.getLov(base.contextPath, base.locale, "HSCS_ITF_NAME")},
+                            {
+                                select: function (e) {
+                                    console.log(e.item);
+                                    $("#itfDescription").val(e.item.description);
+                                    headerId = e.item.headerId;
+                                    itfName = e.item.interfaceName;
+
+                                }
+                            }))
+                    </script>
+                </div>
+                <label class="col-md-1" style="text-align: right">接口说明</label>
+                <div class="col-md-3">
+                    <input id="itfDescription" type="text" readonly style="background-color: #dddddd">
+                </div>
+            </div>
+            <button class="btn btn-success" onclick="downLoadTemplate()">下载模板</button>
+        </div>
+
+
+        <script>
+            ///api/public/hscs/itf/defination/headers/templateExcel
+            function downLoadTemplate() {
+                //判断信息是否填写完整。
+                if (fromSystemValue == null || fromSystemValue == "" || headerId == null || headerId == ""||textFormat==null||textFormat=="") {
+                    kendo.ui.showInfoDialog({
+                        message: "请完善信息"
+                    });
+                    return;
+                }
+//                将相关信息传送到后台。
+                var mydata = {};
+                mydata.headerId = headerId;
+                mydata.fromSystemValue = fromSystemValue;
+                mydata.itfName = itfName;
+                mydata.textFormat = textFormat;
+                console.log("mydata", mydata);
+                var myMsg = $("<input>").attr({name: "myMsg",value: JSON.stringify(mydata)});
+                var myForm = $("<form>").attr({
+                    target: '_self',
+                    method: "POST",
+                    action: _basePath + "/api/public/hscs/itf/defination/headers/templateExcel"
+                }).append(myMsg);
+                $(document.body).append(myForm);
+                myForm.submit();
+                myForm.hide();
+
+            }
+        </script>
+        <script>
+            $("#mycontainer").kendoValidator();
+        </script>
+    </div>
+    <!-----------------------------excel的导入操作---------------------------------->
+    <h4 style="border-bottom: groove 1px;padding-bottom: 10px">导入Excel数据</h4>
+    <input type="file" name="files" id="chooseFile">
+    <div style="margin-top: 10px">
+        <label class="control-label" for="descriptionMsg">导入信息</label>
+        <textarea id="descriptionMsg"></textarea>
+    </div>
+
+    <script>
+        $("#chooseFile").kendoUpload({
+            async: {
+                saveUrl: "/api/public/hscs/itf/defination/headers/uploadExcel",
+                autoUpload: false,//是否自动加载
+                batch: false,  //同时选择多个文件进行批处理操作，默认会将每个文件分别单独上传在同一个路径中
+            },
+            multiple: false, //启动或禁用选择多个文件的功能
+            localization: {
+                select: '请选择文件！', //设置选择按钮名称
+                uploadSelectedFiles: '上传',// 设置上传文件按钮名称
+                headerStatusUploading: '上传中...', //设置上传过程中的状态提示
+            },
+            validation: {//配置文件验证内容
+                allowedExtensions: [".csv", ".xlsx", ".xls"],//格式
+            },
+//            files: initialFiles,
+            upload: onUpload,
+            success: onSuccess,
+            select: onSelect,
+            remove: onRemove,
+
+        });
+
+        //选择文件事件
+        function onSelect(e) {
+//            viewModel.model.set("description",null);
+            console.log("onselect", e.files);
+            var files = e.files;
+            //选中文件的基本信息
+            $.each(files, function () {
+                var fileName = this.name;
+                lowerCase = this.extension.toLowerCase();
+                if (lowerCase != ".xlsx" && lowerCase != ".xls" && lowerCase != ".csv") {
+                    kendo.ui.showInfoDialog({
+                        title: $l('hap.prompt'),
+                        message: '文件的格式必须是xlsx或xls！'
+                    })
+                    e.preventDefault();
+                    return;
+                }
+            });
+        }
+
+        //点击上传触发
+        function onUpload(e) {
+        }
+
+        /*选择文件之后，点击删除标示，触发该事件*/
+        function onRemove(e) {
+            var files = e.files;
+        }
+
+        //回调函数,导入操作
+        function onSuccess(e) {
+            console.log("onSuccess", e.response);
+            if(e.response=="success"){
+                $("#descriptionMsg").val("导入成功");
+            }else {
+                $("#descriptionMsg").val(e.response);
+            }
+            //debugger;
+//            $("#exams").hide();
+
+//            if (e.response.rows && e.response.rows.length != 0){
+//                headerId = e.response.rows[1];
+//                key = e.response.rows[0];
+//            }
+//            //状态为成功
+//            if(e.response.success){
+//                kendo.ui.showInfoDialog({
+//                    title: $l('hap.tip.info'),
+//                    message: e.response.message
+//                }).done(function (event) {
+//                    if (event.button == 'OK') {
+//                        viewModel.model.set("description",e.response.message);
+//                        //window.parent.$("#excelWindow").data("kendoWindow").close();
+//                        //window.parent.$("#Grid").data("kendoGrid").dataSource.page(1);
+//                    }
+//                })
+//            }else{
+//                kendo.ui.showErrorDialog({
+//                    title: $l('hap.tip.info'),
+//                    message: e.response.message
+//                }).done(function (event) {
+//                    //$("#description").html('<h5>失败信息:</h5><br/>' + e.response.message)
+//                    viewModel.model.set("description",e.response.message);
+//                });
+//            }
+        }
+    </script>
+
+    </body>
+    </html>

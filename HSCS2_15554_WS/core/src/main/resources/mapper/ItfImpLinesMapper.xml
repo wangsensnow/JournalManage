@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hap.exam.hscs_itf_imp_lines.mapper.ItfImpLinesMapper">
+    <resultMap id="BaseResultMap" type="hap.exam.hscs_itf_imp_lines.dto.ItfImpLines">
+        <result column="LINE_ID" property="lineId" jdbcType="DECIMAL" />
+        <result column="HEADER_ID" property="headerId" jdbcType="DECIMAL" />
+        <result column="SOURCE_ITERFACE_ID" property="sourceIterfaceId" jdbcType="DECIMAL" />
+        <result column="PROCESS_DATE" property="processDate" jdbcType="DATE" />
+        <result column="IMPORT_STATUS" property="importStatus" jdbcType="VARCHAR" />
+        <result column="PROCESS_STATUS" property="processStatus" jdbcType="VARCHAR" />
+        <result column="PROCESS_GROUP" property="processGroup" jdbcType="DECIMAL" />
+        <result column="STATEMENT_STATUS" property="statementStatus" jdbcType="VARCHAR" />
+        <result column="STATEMENT_DATE" property="statementDate" jdbcType="DATE" />
+        <result column="PROCESS_MESSAGE" property="processMessage" jdbcType="VARCHAR" />
+        <result column="PROGRAM_ID" property="programId" jdbcType="DECIMAL" />
+        <result column="REQUEST_ID" property="requestId" jdbcType="DECIMAL" />
+    </resultMap>
+
+
+</mapper>

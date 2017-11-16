@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hap.exam.hscs_itf_imp_interfaces.mapper.ItfImpInterfacesMapper">
+    <resultMap id="BaseResultMap" type="hap.exam.hscs_itf_imp_interfaces.dto.ItfImpInterfaces">
+        <result column="ITERFACE_ID" property="iterfaceId" jdbcType="DECIMAL" />
+        <result column="SOURCE_SYSTEM" property="sourceSystem" jdbcType="VARCHAR" />
+        <result column="BATCH_NUM" property="batchNum" jdbcType="VARCHAR" />
+        <result column="INTERFACE_NAME" property="interfaceName" jdbcType="VARCHAR" />
+        <result column="MODULE_CODE" property="moduleCode" jdbcType="VARCHAR" />
+        <result column="LINE_COUNT" property="lineCount" jdbcType="DECIMAL" />
+        <result column="STATUS_CODE" property="statusCode" jdbcType="VARCHAR" />
+        <result column="VALIDATE_STATUS" property="validateStatus" jdbcType="VARCHAR" />
+        <result column="PROCESS_MESSAGE" property="processMessage" jdbcType="VARCHAR" />
+        <result column="PROGRAM_ID" property="programId" jdbcType="DECIMAL" />
+        <result column="REQUEST_ID" property="requestId" jdbcType="DECIMAL" />
+
+
+        <result column="VALUE1" property="value1" jdbcType="VARCHAR" />
+        <result column="VALUE2" property="value2" jdbcType="VARCHAR" />
+        <result column="VALUE3" property="value3" jdbcType="VARCHAR" />
+        <result column="VALUE4" property="value4" jdbcType="VARCHAR" />
+        <result column="VALUE5" property="value5" jdbcType="VARCHAR" />
+        <result column="VALUE6" property="value6" jdbcType="VARCHAR" />
+        <result column="VALUE7" property="value7" jdbcType="VARCHAR" />
+        <result column="VALUE8" property="value8" jdbcType="VARCHAR" />
+        <result column="VALUE9" property="value9" jdbcType="VARCHAR" />
+        <result column="VALUE10" property="value10" jdbcType="VARCHAR" />
+
+    </resultMap>
+
+    
+</mapper>

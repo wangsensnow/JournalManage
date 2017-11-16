@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hap.exam.hscs_itf_mapping_values.mapper.ItfMappingValuesMapper">
+    <resultMap id="BaseResultMap" type="hap.exam.hscs_itf_mapping_values.dto.ItfMappingValues">
+        <result column="VALUE_ID" property="valueId" jdbcType="DECIMAL" />
+        <result column="HEADER_ID" property="headerId" jdbcType="DECIMAL" />
+        <result column="VALUE1" property="value1" jdbcType="VARCHAR" />
+        <result column="VALUE2" property="value2" jdbcType="VARCHAR" />
+        <result column="VALUE3" property="value3" jdbcType="VARCHAR" />
+        <result column="VALUE4" property="value4" jdbcType="VARCHAR" />
+        <result column="VALUE5" property="value5" jdbcType="VARCHAR" />
+        <result column="VALUE6" property="value6" jdbcType="VARCHAR" />
+        <result column="VALUE7" property="value7" jdbcType="VARCHAR" />
+        <result column="VALUE8" property="value8" jdbcType="VARCHAR" />
+        <result column="VALUE9" property="value9" jdbcType="VARCHAR" />
+        <result column="VALUE10" property="value10" jdbcType="VARCHAR" />
+        <result column="VALUE11" property="value11" jdbcType="VARCHAR" />
+        <result column="VALUE12" property="value12" jdbcType="VARCHAR" />
+        <result column="VALUE13" property="value13" jdbcType="VARCHAR" />
+        <result column="VALUE14" property="value14" jdbcType="VARCHAR" />
+        <result column="VALUE15" property="value15" jdbcType="VARCHAR" />
+        <result column="VALUE16" property="value16" jdbcType="VARCHAR" />
+        <result column="VALUE17" property="value17" jdbcType="VARCHAR" />
+        <result column="VALUE18" property="value18" jdbcType="VARCHAR" />
+        <result column="VALUE19" property="value19" jdbcType="VARCHAR" />
+        <result column="VALUE20" property="value20" jdbcType="VARCHAR" />
+        <result column="PROGRAM_ID" property="programId" jdbcType="DECIMAL" />
+        <result column="REQUEST_ID" property="requestId" jdbcType="DECIMAL" />
+    </resultMap>
+
+
+</mapper>

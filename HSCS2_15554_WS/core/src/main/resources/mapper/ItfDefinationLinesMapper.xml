@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hap.exam.itf_defination_lines.mapper.ItfDefinationLinesMapper">
+    <resultMap id="BaseResultMap" type="hap.exam.itf_defination_lines.dto.ItfDefinationLines">
+        <result column="LINE_ID" property="lineId" jdbcType="DECIMAL"/>
+        <result column="HEADER_ID" property="headerId" jdbcType="DECIMAL"/>
+        <result column="TITLE_TEXT" property="titleText" jdbcType="VARCHAR"/>
+        <result column="COLUMN_TYPE" property="columnType" jdbcType="VARCHAR"/>
+        <result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR"/>
+        <result column="SEQ_NUM" property="seqNum" jdbcType="DECIMAL"/>
+        <result column="VALUE_TYPE" property="valueType" jdbcType="VARCHAR"/>
+        <result column="COLUMN_LEN" property="columnLen" jdbcType="DECIMAL"/>
+        <result column="VALUE_SET" property="valueSet" jdbcType="VARCHAR"/>
+        <result column="FLEX_SET_COLUMN" property="flexSetColumn" jdbcType="VARCHAR"/>
+        <result column="COLUMN_FORMAT" property="columnFormat" jdbcType="VARCHAR"/>
+        <result column="REQUIRED_FLAG" property="requiredFlag" jdbcType="VARCHAR"/>
+        <result column="SHOW_FLAG" property="showFlag" jdbcType="VARCHAR"/>
+        <result column="ENABLE_FLAG" property="enableFlag" jdbcType="VARCHAR"/>
+        <result column="UNIQUE_FLAG" property="uniqueFlag" jdbcType="VARCHAR"/>
+        <result column="SHOW_LENGTH" property="showLength" jdbcType="DECIMAL"/>
+        <result column="PROGRAM_ID" property="programId" jdbcType="DECIMAL"/>
+        <result column="REQUEST_ID" property="requestId" jdbcType="DECIMAL"/>
+    </resultMap>
+    <resultMap id="FlexSetColumn" type="hap.exam.itf_defination_lines.dto.FlexSetColumn">
+        <result column="gridFieldNameDescription" property="gridFieldNameDescription" jdbcType="DECIMAL"/>
+        <result column="gridFieldName" property="gridFieldName" jdbcType="DECIMAL"/>
+    </resultMap>
+    <select id="selectFlexSetColumn" resultMap="FlexSetColumn" parameterType="java.lang.String">
+     select
+          sys_prompts.DESCRIPTION as gridFieldNameDescription,
+            sys_lov_item.GRID_FIELD_NAME as gridFieldName
+        from sys_lov_item,sys_prompts,sys_lov
+        where
+          sys_lov.CODE = #{code}
+          and sys_lov.LOV_ID=sys_lov_item.LOV_ID
+          and sys_lov_item.DISPLAY=sys_prompts.PROMPT_CODE
+          and lang='zh_CN'
+</select>
+
+    <delete id="deleteByHeaderId" parameterType="java.lang.Integer">
+        DELETE from hscs_itf_defination_lines where header_id = #{headerId}
+    </delete>
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="hap.exam.itf_defination_lines.dto.ItfDefinationLines">
+        select LINE_ID,SEQ_NUM,COLUMN_TYPE from hscs_itf_defination_lines
+        where HEADER_ID = ${headerId} and TITLE_TEXT = #{titleText}
+    </select>
+</mapper>

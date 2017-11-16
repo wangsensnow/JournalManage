@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hap.exam.hscs_itf_mapping_lines.mapper.ItfMappingLinesMapper">
+    <resultMap id="BaseResultMap" type="hap.exam.hscs_itf_mapping_lines.dto.ItfMappingLines">
+        <result column="LINE_ID" property="lineId" jdbcType="DECIMAL" />
+        <result column="HEADER_ID" property="headerId" jdbcType="DECIMAL" />
+        <result column="LINE_NUM" property="lineNum" jdbcType="DECIMAL" />
+        <result column="FIELD_TYPE" property="fieldType" jdbcType="VARCHAR" />
+        <result column="ITF_LINE_ID" property="itfLineId" jdbcType="DECIMAL" />
+        <result column="TITLE_TEXT" property="titleText" jdbcType="VARCHAR" />
+        <result column="PROGRAM_ID" property="programId" jdbcType="DECIMAL" />
+        <result column="REQUEST_ID" property="requestId" jdbcType="DECIMAL" />
+    </resultMap>
+
+
+
+</mapper>

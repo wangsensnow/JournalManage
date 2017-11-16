@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hap.exam.hscs_itf_mapping_headers.mapper.ItfMappingHeadersMapper">
+    <resultMap id="BaseResultMap" type="hap.exam.hscs_itf_mapping_headers.dto.ItfMappingHeaders">
+        <result column="HEADER_ID" property="headerId" jdbcType="DECIMAL" />
+        <result column="MAPPING_NAME" property="mappingName" jdbcType="VARCHAR" />
+        <result column="MODULE_CODE" property="moduleCode" jdbcType="VARCHAR" />
+        <result column="ITF_HEADER_ID" property="itfHeaderId" jdbcType="DECIMAL" />
+        <result column="FLEX_SET_NAME" property="flexSetName" jdbcType="VARCHAR" />
+        <result column="START_ACTIVE_DATE" property="startActiveDate" jdbcType="DATE" />
+        <result column="END_ACTIVE_DATE" property="endActiveDate" jdbcType="DATE" />
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+        <result column="PROGRAM_ID" property="programId" jdbcType="DECIMAL" />
+        <result column="REQUEST_ID" property="requestId" jdbcType="DECIMAL" />
+    </resultMap>
+
+
+</mapper>

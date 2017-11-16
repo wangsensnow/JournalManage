@@ -1,0 +1,138 @@
+<#include "../include/header.html">
+    <style type="text/css">
+        #headerUl li {
+            list-style: none;
+            float: left;
+            margin-right: 5px;
+        }
+    </style>
+    <div class="row" id="formDiv" style="padding: 5px">
+        <div class="form-group">
+            <div class="row">
+                <label class="col-md-1" for="name" style="text-align: right">映射名称</label>
+                <div class="col-md-2">
+                    <input name="name" id="name" type="text" required validationMessage="必输"/>
+                    <div style="position:absolute;left:72%;top:-4px;">
+                        <span data-for="name" class="k-invalid-msg"></span>
+                    </div>
+                </div>
+
+                <label class="col-md-1" for="description" style="text-align: right">映射说明</label>
+                <div class="col-md-2">
+                    <input name="description" id="description" type="text"/>
+                </div>
+
+                <label class="col-md-1" for="itfName" style="text-align: right">接口名称</label>
+                <div class="col-md-2">
+                    <input id="itfName" name="itfName" type="text" required validationMessage="必输"/>
+                    <div style="position:absolute;z-index: 2;left:70%;top:-4px;">
+                        <span data-for="itfName" class="k-invalid-msg"></span>
+                    </div>
+                    <script>
+                        //接口名称的lov
+                        $("#itfName").kendoLov(${lovProvider.getLov(base.contextPath, base.locale,"HSCS_ITF_NAME")})
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 5px">
+            <div class="form-group">
+                <label class="col-md-1" for="startTime" style="text-align: right">起始时间</label>
+                <div class="col-md-2">
+                    <input id="startTime" required/>
+                    <script>
+                        //设置起始时间
+                        $("#startTime").kendoDatePicker({
+                            value: new Date(),
+                            change: function () {
+                                $("#endTime").data("kendoDatePicker").min(this.value());
+                            }
+                        });
+                    </script>
+                </div>
+
+                <label class="col-md-1" for="endTime" style="text-align: right">截止时间</label>
+                <div class="col-md-2">
+                    <input id="endTime"/>
+                    <script>
+                        $("#endTime").kendoDatePicker({
+                            min: $("#startTime").data("kendoDatePicker").value()
+                        });
+                    </script>
+                </div>
+
+                <label class="col-md-1" for="valueSetName" style="text-align: right">值集名称</label>
+                <div class="col-md-2">
+                    <input id="valueSetName" type="text"/>
+                    <script>
+                        //值集的输入框
+                        $("#valueSetName").kendoLov($.extend(${lovProvider.getLov(base.contextPath, base.locale,"HSCS_ITF_VALUESET")}, {}))
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ul id="headerUl" style="margin-top: 5px">
+        <li><input type="button" class="btn btn-primary" value="<@spring.message 'hap.new'/>"></li>
+        <li><input type="button" class="btn btn-success" value="保存"></li>
+        <li><input type="button" class="btn btn-danger" value="删除"></li>
+        <li><input type="button" class="btn btn-primary" value="映射明细维护"></li>
+    </ul>
+
+    <script>
+        $("#formDiv").kendoValidator({
+//            invalidMessageType : "tooltip"
+        });
+    </script>
+    <!---------------------------------------grid------------------------------------------------>
+    <div style="margin-top: 40px;">
+        <button class="btn btn-primary" type="button"><span class="fa fa-plus"></span></button>
+        <button class="btn btn-danger" type="button"><span class="fa fa-minus"></span></button>
+    </div>
+    <div id="grid" style="margin-top: 40px;height: 300px"></div>
+
+    <script>
+        //dataSource的创建
+        var dataSource = new kendo.data.DataSource({
+            batch: true,
+            serverPaging: true,
+            pageZise: 10,
+            transport: {},
+            schema: {}
+        });
+    </script>
+    <script>
+        //grid的创建
+        $("#grid").kendoGrid({
+            dataSource: dataSource,
+            resizable: false,
+            scrollable: true,
+            selectable: 'multiple, rowbox',
+            pageable: {
+                pageSizes: [5, 10, 20, 50],
+                refresh: true,
+                buttonCount: 5
+            },
+            columns: [{
+                filed: "ww",
+                text: "通用字段类型",
+                width: "120"
+            }, {
+                filed: "w",
+                text: "通用字段类型",
+                width: "120"
+            }, {
+                filed: "w",
+                text: "通用字段类型",
+                width: "120"
+            }, {
+                filed: "q",
+                text: "通用字段类型",
+                width: "120"
+            }
+            ]
+        });
+    </script>
+    </body>
+    </html>
